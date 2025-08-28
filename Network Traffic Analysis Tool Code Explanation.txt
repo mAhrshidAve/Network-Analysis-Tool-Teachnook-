@@ -1,0 +1,91 @@
+
+### Step-by-Step Breakdown of the Network Traffic Analysis Tool
+================================================================
+
+1. Imports :
+-------------
+
+   - Libraries are imported at the beginning:
+
+     - pandas: For handling and analyzing data.
+
+     - matplotlib.pyplot: For creating visualizations.
+
+     - scapy: For capturing and manipulating network packets.
+
+     - collections.Counter: To count occurrences efficiently.
+     
+     - time: For handling timestamps.
+     
+     - tkinter: For creating the GUI.
+
+     - threading: For running packet sniffing in the background.
+
+     - matplotlib.animation: For creating animated plots.
+
+     - datetime: For working with date and time.
+
+     - tkFont: For font styling in tkinter.
+
+2. Data Structures :
+--------------------
+
+   - captured_packets: List to store captured packet objects.
+
+   - packet_data: Dictionary to store details of captured packets (time, source IP, destination IP, protocol, and packet length).
+
+   - ip_traffic and protocol_distribution: 'Counter' objects to track traffic and protocol distribution.
+
+   - packet_count_per_second: List to track the number of packets captured per second.
+
+   - sniffing: Boolean flag to control packet sniffing.
+
+   - time_intervals: List to store timestamps for live graph updates.
+
+   - detected_issues and detected_threats: Lists to store detected issues and potential threats.
+
+   - Various thresholds are defined for different types of network issues.
+
+3. Function Definitions :
+-------------------------
+
+   - detect_issues(ip_src, pkt_len, ip_dst): This function checks for specific network issues based on the source IP, packet length, and destination IP. It detects:
+     - IP flooding.
+     - Unusually large packet sizes.
+     - Port scanning behavior.
+     - Unusual connections to the same destination.
+
+   - packet_callback(packet): This function is called for each captured packet. It extracts details (timestamp, source IP, destination IP, protocol, packet length) and updates the data structures. It also detects issues using the 'detect_issues' function.
+
+   - update_packet_table(...): This updates the GUI with details of each captured packet.
+
+   - start_sniffing(): This function initiates packet sniffing using Scapy.
+
+   - stop_sniffing(): Stops the sniffing process and shows a message box to inform the user.
+
+   - generate_packet_report(): Creates a summary report of the captured packets and saves it as a CSV file. It also saves the actual captured packets in a PCAP file.
+
+   - generate_threat_report(): Writes detected issues and threats to a text file.
+
+   - show_protocol_distribution(): Generates and displays a pie chart showing the distribution of different protocols captured.
+
+   - start_sniffing_thread(): Starts the sniffing process in a separate thread so that it doesn’t block the GUI.
+
+   - update_live_traffic(i): Updates a live plot of packet counts per second. It counts packets captured in the last second and updates the graph.
+
+   - show_full_traffic_rate(): Generates a line plot showing packet counts over time.
+
+   - create_gui(): This is where the GUI is set up:
+     - Buttons for starting/stopping sniffing, generating reports, and displaying graphs.
+     - A tree view to display captured packet data.
+     - A plot for live traffic data.
+
+4. Main Execution :
+-------------------
+
+   - The application starts by calling the 'create_gui()' function within the 'if __name__ == "__main__":' block. This ensures that the GUI is created and the program runs only if this script is executed directly.
+
+
+### Summary
+============
+The code implements a network monitoring tool that captures IP packets, detects potential issues like flooding or port scans, and provides a graphical interface to visualize and report the captured data. It utilizes threading to keep the GUI responsive while sniffing packets and employs matplotlib for data visualization.
